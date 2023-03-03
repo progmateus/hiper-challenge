@@ -4,8 +4,6 @@ import { Box, Button, Checkbox, Container, InputLabel, List, ListItem, ListItemB
 import dayjs from "dayjs"
 import { useForm } from "react-hook-form"
 
-
-
 function ListDayItem(props) {
 
     const { index, register, setValue, getFieldState, watch } = props;

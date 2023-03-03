@@ -8,6 +8,13 @@ import ListDayItem from './components/ListDayItem';
 import { useForm } from "react-hook-form"
 import { api } from './services/api';
 
+import utc from 'dayjs/plugin/utc'
+
+dayjs.extend(utc)
+
+var customParseFormat = require('dayjs/plugin/customParseFormat')
+dayjs.extend(customParseFormat)
+
 
 interface IRequestDay {
   day: string;
@@ -64,8 +71,7 @@ const responseMocked = [
   }
 ]
 
-var customParseFormat = require('dayjs/plugin/customParseFormat')
-dayjs.extend(customParseFormat)
+
 
 function App() {
   const [listDays, setListDays] = useState<any>([])
@@ -80,13 +86,15 @@ function App() {
     api.get("/workdays/d5eb9708-8f9f-4b2d-a5b0-5612e2b56c23")
       .then((response) => {
 
-        for (let workday of response.data) {
 
+        for (let workday of response.data) {
           const newEntry_time = transformInvalidTime(workday.entry_time)
+
+
           const newDeparture_time = transformInvalidTime(workday.departure_time)
 
-          setValue(`${workday.day}_entry_time`, dayjs(newEntry_time, "HH: mm"))
-          setValue(`${workday.day}_departure_time`, dayjs(newDeparture_time, "HH: mm"))
+          setValue(`${workday.day}_entry_time`, dayjs(newEntry_time, "HH:mm"))
+          setValue(`${workday.day}_departure_time`, dayjs(newDeparture_time, "HH:mm"))
         }
 
         setListDays(response.data)
